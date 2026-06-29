@@ -1,9 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=git-shortcuts.conf
-source "$SCRIPT_DIR/git-shortcuts.conf"
-
 gcht() {
   local ticketNum="$1"
 
@@ -25,8 +21,27 @@ gcht() {
 
   if [[ $count -gt 1 ]]; then
     echo "Multiple branches found matching ticket: $ticketNum"
-    echo "$matches"
-    return 1
+    local branch_array=()
+    while IFS= read -r line; do
+      branch_array+=("$line")
+    done <<< "$matches"
+
+    local i
+    for i in "${!branch_array[@]}"; do
+      echo "$((i+1))) ${branch_array[$i]}"
+    done
+
+    local choice
+    read -rp "Select branch (1-$count): " choice
+
+    if ! [[ "$choice" =~ ^[0-9]+$ ]] || [[ $choice -lt 1 ]] || [[ $choice -gt $count ]]; then
+      echo "Invalid selection"
+      return 1
+    fi
+
+    local branch="${branch_array[$((choice-1))]}"
+    git checkout "$branch"
+    return
   fi
 
   local branch
