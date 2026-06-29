@@ -1,9 +1,7 @@
     #!/usr/bin/env bash
 gclear(){
-    set -euo pipefail
-
     echo "Fetching and pruning remote refs..."
-    git fetch --prune
+    git fetch --prune || return 1
 
     gone=$(git branch -vv | awk '/: gone]/ && $1 != "*" {print $1}')
 
@@ -17,7 +15,7 @@ gclear(){
     echo "$gone" | sed 's/^/  /'
     echo
 
-    read -r -p "Delete these branches? [y/N] " response
+    read "response?Delete these branches? [y/N] "
     if [[ "$response" =~ ^[Yy]$ ]]; then
         failed=()
         while IFS= read -r branch; do
@@ -34,7 +32,7 @@ gclear(){
             echo "The following branches could not be safely deleted (unmerged commits):"
             printf '  %s\n' "${failed[@]}"
             echo
-            read -r -p "Force-delete these branches? [y/N] " force_response
+            read "force_response?Force-delete these branches? [y/N] "
             if [[ "$force_response" =~ ^[Yy]$ ]]; then
                 for branch in "${failed[@]}"; do
                     git branch -D "$branch"
