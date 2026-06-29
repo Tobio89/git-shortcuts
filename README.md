@@ -14,8 +14,8 @@ It's recommended to set `TICKET_PREFIX` in `git-shortcuts.conf` to your Jira tic
 ### Functions
 
 - `gpc` - uses grep to find current branch, and push. Works even if remote doesn't have the branch!
-- `gplc` - uses grep to find current branch, and pull.
-- `gclear`
+- `gplc` - uses grep to find current branch, and pull
+- `gclear` - runs `git fetch`, identifies branches that are closed in origin, and offers to delete them
 
 ##### The following require `TICKET_PREFIX` to be set in `git-shortcuts.conf`
 
