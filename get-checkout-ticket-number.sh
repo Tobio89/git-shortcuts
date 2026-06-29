@@ -4,7 +4,7 @@ gcht() {
   local ticketNum="$1"
 
   if [[ -z "$ticketNum" ]]; then
-    echo "Usage: gchtgc <ticket-number>"
+    echo "Usage: gcht <ticket-number>"
     return 1
   fi
 
