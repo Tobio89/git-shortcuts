@@ -1,6 +1,9 @@
 #!/bin/bash
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -n "$ZSH_VERSION" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "${(%):-%x}")" && pwd)"
+else
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+fi
 
 source "$SCRIPT_DIR/git-shortcuts.conf"
 source "$SCRIPT_DIR/get-checkout-ticket-number.sh"
