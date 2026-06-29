@@ -2,6 +2,8 @@
 
 A selection of shortcuts that let you use git more quickly.
 
+It's recommended to set `TICKET_PREFIX` in `git-shortcuts.conf` to your Jira ticket prefix if your repo branches include the ticket as a prefix.
+
 ## Shortcuts
 
 ### Aliases
@@ -25,3 +27,12 @@ A selection of shortcuts that let you use git more quickly.
   - `-c` to explicitly set `${COMMIT_TYPE}` to `chore`
   - `-t TICKET_NUMBER` to set TICKET to `${TICKET_PREFIX}TICKET_NUMBER`
   - `-T CUSTOM_TICKET` to set TICKET to `${CUSTOM_TICKET}`
+
+## Usage
+
+- Clone this repository to your computer.
+- Open `.zshrc` or `.bashrc`, or your preferred shell configuration file.
+- add `source "{PATH_TO_THIS_REPO}/GIT-SHORTCUTS.sh"` into that file, and save
+- Either:
+  - use `source .zshrc` (or `.bashrc` etc) to reload the file
+  - OR quit your terminal and reopen it
