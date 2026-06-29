@@ -5,9 +5,12 @@ gc() {
   local commitType="feat"
   local customTicket=""
 
+
+
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -t) customTicket="$2"; shift 2 ;;
+      -t) customTicket="${TICKET_PREFIX}$2"; shift 2 ;;
+      -T) customTicket="$2"; shift 2 ;;
       -f) commitType="feat"; shift ;;
       -x) commitType="fix"; shift ;;
       -c) commitType="chore"; shift ;;
@@ -18,7 +21,12 @@ gc() {
   local commitMsg="$1"
 
   if [[ -z "$commitMsg" ]]; then
-    echo "Usage: gc [-t TICKET] [-f|-x|-c] <commit message>"
+    echo "Usage: gc [-t TICKET with ${TICKET_PREFIX} or -T TICKET without prefix] [-f|-x|-c] <commit message>"
+    return 1
+  fi
+
+  if [[ "$customTicket" == "${TICKET_PREFIX}" ]]; then
+    echo "Invalid ticket number. Use -t TICKET with ${TICKET_PREFIX} or -T TICKET without prefix."
     return 1
   fi
 
